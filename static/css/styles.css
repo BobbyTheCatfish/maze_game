@@ -1,0 +1,14 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid black;
+}
