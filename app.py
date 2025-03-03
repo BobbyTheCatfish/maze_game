@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 import cv2
 import mediapipe as mp
 import threading
+import time
 
 app = Flask(__name__)
 
@@ -80,15 +81,20 @@ def detect_hand():
 def index():
     return render_template('index.html')
 
+last_movement_time = 0  # Store last movement timestamp
+movement_delay = 0.5  # Delay in seconds (adjust for speed)
+
 @app.route('/get_movement')
 def get_movement():
-    global movement_command
-    print("🔍 /get_movement route was accessed")  
+    global movement_command, last_movement_time
+    print("🔍 /get_movement route was accessed")
 
-    if movement_command != "none":
+    current_time = time.time()
+    if movement_command != "none" and (current_time - last_movement_time > movement_delay):
         last_command = movement_command
         movement_command = "none"  # Reset AFTER sending
-        print(f"📡 Sent to JS: {last_command}")  
+        last_movement_time = current_time  # Update last movement time
+        print(f"📡 Sent to JS: {last_command}")
         return jsonify({"command": last_command})
     
     return jsonify({"command": "none"})
