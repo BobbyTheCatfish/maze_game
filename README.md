@@ -71,9 +71,9 @@
 
 ## 🚀 Future Enhancements
 
-- 🔹 More levels with increasing complexity.
-- 🔹 Customizable controls and maze design.
-- 🔹 Sound effects and animations.
+- More levels with increasing complexity.
+- Customizable controls and maze design.
+- Sound effects and animations.
 
 ---
 
