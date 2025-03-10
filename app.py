@@ -4,14 +4,20 @@ import mediapipe as mp
 import threading
 import time
 
+# Configuration
+from configparser import ConfigParser
+config = ConfigParser()
+config.read('config.ini')
+
+
 app = Flask(__name__)
 
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
-hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
+hands = mp_hands.Hands(min_detection_confidence=config.getfloat("config", "min_detection"), min_tracking_confidence=config.getfloat("config", "min_tracking"))
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(config.getint("config", "camera_id"))
 movement_command = "none"  # Store detected movement
 
 def detect_hand():
@@ -33,7 +39,7 @@ def detect_hand():
         frame_height, frame_width, _ = frame.shape
         frame_center_x = frame_width // 2
         frame_center_y = frame_height // 2
-        dead_zone = 80  # Your updated dead zone size
+        dead_zone = config.getint("config", "dead_zone")  # Your updated dead zone size
 
         # Draw the dead zone square (green)
         top_left = (frame_center_x - dead_zone, frame_center_y - dead_zone)
@@ -50,7 +56,7 @@ def detect_hand():
 
                 frame_center_x = frame.shape[1] // 2
                 frame_center_y = frame.shape[0] // 2
-                dead_zone = 70
+                dead_zone = dead_zone - 10
 
                 if y_index < frame_center_y - dead_zone:
                     movement_command = "up"
@@ -104,4 +110,4 @@ if __name__ == '__main__':
     hand_thread = threading.Thread(target=detect_hand, daemon=True)
     hand_thread.start()
 
-    app.run(debug=True, use_reloader=False)  # Prevent double execution in Flask
+    app.run(debug=config.getboolean("config", "debug"), use_reloader=False, port=config.getint("config", "port"))  # Prevent double execution in Flask
