@@ -59,7 +59,7 @@ def detect_hand():
 
                 frame_center_x = frame.shape[1] // 2
                 frame_center_y = frame.shape[0] // 2
-                dead_zone = 70
+                dead_zone = dead_zone - 10
 
                 if y_index < frame_center_y - dead_zone:
                     movement_command = "up"
