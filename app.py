@@ -47,10 +47,21 @@ def detect_hand():
             for hand_landmarks in result.multi_hand_landmarks:
                 x_index = int(hand_landmarks.landmark[8].x * frame.shape[1])
                 y_index = int(hand_landmarks.landmark[8].y * frame.shape[0])
+                z_index = int(hand_landmarks.landmark[8].z * config.getint("config", "z_scale"))
+
+                if (z_index < config.getint("config", "z_cutoff")):
+                    continue
 
                 frame_center_x = frame.shape[1] // 2
                 frame_center_y = frame.shape[0] // 2
                 dead_zone = 70
+
+                
+                if (config.getboolean("config", "debug") == True):
+                    cv2.putText(frame, f"X: {x_index}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+                    cv2.putText(frame, f"Y: {y_index}", (50, 130), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+                    cv2.putText(frame, f"Z: {z_index}", (50, 160), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+
 
                 if y_index < frame_center_y - dead_zone:
                     movement_command = "up"
