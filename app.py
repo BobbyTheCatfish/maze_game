@@ -55,6 +55,7 @@ def detect_hand():
 
     while True:
         ret, frame = cap.read()
+        # If the camera feed couldn't be read
         if not ret:
             drawMode = False
             continue
@@ -105,9 +106,8 @@ def detect_hand():
         frame = cv2.bitwise_and(frame, invert)
         frame = cv2.bitwise_or(frame, drawing)
 
+        # Show the result
         cv2.imshow("Hand Tracking", frame)
-
-        key = cv2.waitKey(1) & 0xFF
         
 
         ###################
@@ -120,6 +120,8 @@ def detect_hand():
         # [: Brush Smaller
         # ]: Brush Larger
         # 1-9: Color Select
+
+        key = cv2.waitKey(1) & 0xFF
 
         if key == ord("q"):
             break
