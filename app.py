@@ -32,6 +32,8 @@ num_codes = []
 for i in range(10):
     num_codes.append(ord(str(i)))
 
+splash = cv2.imread("splash.jpg")
+cv2.imshow("Hand Tracking", splash)
 
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
@@ -71,7 +73,7 @@ def detect_hand():
                 y_index = int(hand_landmarks.landmark[8].y * frame.shape[0])
                 z_index = int(hand_landmarks.landmark[8].z * config.getint("config", "z_scale"))
 
-                # Z Position based drawing. Gotta find another way
+                # Z Position based drawing. It works, but not well. Gotta find another way
                 # if z_index < config.getint("config", "z_cutoff"):
                 #     drawMode = False
                 #     continue
@@ -127,27 +129,22 @@ def detect_hand():
             break
 
         elif key == ord("c"):
-            if config.getboolean("config", "debug"):
-                print("Clearing...")
+            print("Clearing...")
             drawing = np.zeros((height,width,3), np.uint8)
 
         elif key == ord("b"):
-            if config.getboolean("config", "debug"):
-                print("Background Toggled")
+            print("Background Toggled")
             # background_mode = not background_mode
 
         elif key == ord("["):
-            if config.getboolean("config", "debug"):
-                print("Brush Smaller")
+            print("Brush Smaller")
             # brush_size = brush_size - 1
         elif key == ord("]"):
-            if config.getboolean("config", "debug"):
-                print("Brush Larger")
+            print("Brush Larger")
             # brush_size = brush_size + 1
 
         elif key in num_codes:
-            if config.getboolean("config", "debug"):
-                print("Color Swap")
+            print("Color Swap")
             # color = new_color
 
     cap.release()

@@ -1,22 +1,11 @@
-# 🏁 Robot Maze Game – Hand Gesture Controlled
+# 🎨 Finger Painting
 
-🚀 **A fun and interactive robot maze game where users navigate through a maze using hand gestures captured via a camera. Built with Flask, OpenCV, and JavaScript.**
-
----
-
-## 📌 Features
-
-- 🖐 **Hand Gesture Controls** – Navigate the robot character using real-time hand movements.
-- 🏎 **Adjustable Sensitivity** – Dead zone and movement speed tuning for smooth control.
-- 🗺 **Multiple Levels** – Progress through increasingly difficult maze layouts.
-- 🎮 **Real-Time Feedback** – Visual indicators for detected gestures.
+Paint a masterpiece with nothing but your finger and a webcam!
 
 ---
 
 ## 🛠️ Tech Stack
-
-- **Frontend:** HTML, CSS, JavaScript (with `game.js` for maze logic)
-- **Backend:** Python (Flask)
+- **Backend:** Python
 - **Computer Vision:** OpenCV, MediaPipe
 
 ---
@@ -25,11 +14,11 @@
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/AlexCRosa/maze_game.git
+   git clone https://github.com/Wake-Tech-Programming-Club/maze_game.git
    cd maze_game
    ```
 
-2. **Set up a virtual environment** *(recommended)*:
+2. **Set up a virtual environment** *(recommended, but not required)*:
    ```bash
    python -m venv .venv
    source venv/bin/activate  # On macOS/Linux
@@ -41,41 +30,34 @@
    pip install -r requirements.txt
    ```
 
-4. **Run the Flask server**:
+4. **Create your configuration file**:
+   Make a copy of `config-example.ini` called `config.ini`.
+
+4. **Run the server**:
    ```bash
    python app.py
    ```
 
-5. **Access the game** in your browser at `http://localhost:5000`.
-
 ---
 
-## 🎮 How to Play
-
-1. Stand in front of the camera and position your hand within the detection area.
-2. Move your hand **up, down, left, or right** to guide the robot.
-3. Navigate through the maze and reach the exit to progress to the next level.
-4. Enjoy the challenge of progressively harder mazes!
+## 🖌️ How to Paint
+1. Stand in front of the camera
+2. Move your index finger around the camera frame to draw a picture
+3. Press "C" to clear the drawing
+4. Enjoy the challenge!
 
 ---
 
 ## 🛠️ Troubleshooting
 
 - **Gesture sensitivity too high?**
-  - Adjust the **dead zone value** in `app.py` and **movement update rate** in `game.js`.
+  - Adjust the **min_detection** and **min_tracking** values in `config.ini`.
 
-- **Maze not loading?**
-  - Check if the maze definition file is correctly linked.
-
----
-
-## 🚀 Future Enhancements
-
-- More levels with increasing complexity.
-- Customizable controls and maze design.
-- Sound effects and animations.
+- **Wrong camera?**
+  - Change the value of `camera_id` in `config.ini` and restart. Keep trying until you find the right camera.
 
 ---
+
 
 ## 📜 License
 
@@ -86,9 +68,3 @@ This project is licensed under the **MIT License** – feel free to modify and e
 ## 🤝 Contributing
 
 Have ideas or improvements? Fork the repository and submit a pull request! 🎉
-
----
-
-## 📬 Contact
-
-For any inquiries, reach out via [*alex_cesar20@hotmail.com*] or open an issue on GitHub.
