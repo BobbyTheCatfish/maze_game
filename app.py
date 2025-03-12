@@ -4,8 +4,10 @@ import numpy as np
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 from configparser import ConfigParser
+import utils as u
 
-
+# Fancy text for the lols
+print(open("./splash.txt").read())
 
 # Configuration
 config = ConfigParser()
@@ -54,6 +56,8 @@ def detect_hand():
     x_prev = 0
     y_prev = 0
     drawMode = False
+
+    window_width, window_height = u.calc_window_size(config, width, height)
 
     while True:
         ret, frame = cap.read()
@@ -107,7 +111,7 @@ def detect_hand():
         invert = cv2.cvtColor(invert, cv2.COLOR_GRAY2BGR)
         frame = cv2.bitwise_and(frame, invert)
         frame = cv2.bitwise_or(frame, drawing)
-
+        frame = cv2.resize(frame, (window_width, window_height))
         # Show the result
         cv2.imshow("Hand Tracking", frame)
         
@@ -151,5 +155,6 @@ def detect_hand():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
+
     # Start hand tracking thread
     detect_hand()
